@@ -14,6 +14,21 @@ import org.junit.Test;
  */
 public class TestObjects {
 
+    static class A {
+        int id;
+        String name;
+
+        A(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return com.google.common.base.Objects.toStringHelper(this).add("id", id).add("name", name).toString();
+        }
+    }
+
     @Before
     public void setUp() {
     }
@@ -26,6 +41,14 @@ public class TestObjects {
         assertThat(Objects.equals(null, "A"), equalTo(false)); // JDK 7!!
         assertThat(Objects.equals("A", null), equalTo(false)); // JDK 7!!
         assertThat(Objects.equals(null, null), equalTo(true)); // JDK 7!!
-        assertThat(Objects.equals(Integer.valueOf(5), 5), equalTo(true));
+        assertThat(Objects.equals(Integer.valueOf(5), 5), equalTo(true)); // JDK7
+    }
+
+    @Test
+    public void testToStirng() {
+
+        final A qqrq = new A(12, "qqrq");
+        assertThat(qqrq.toString(),equalTo("A{id=12, name=qqrq}"));
+
     }
 }
